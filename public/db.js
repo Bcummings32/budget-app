@@ -1,3 +1,12 @@
+
+const indexedDB =
+window.indexedDB ||
+window.mozIndexedDB ||
+window.webkitIndexedDB ||
+window.msIndexedDB ||
+window.shimIndexedDB;
+
+
 let db;
 
 const request = indexedDB.open("budget", 1);
@@ -16,7 +25,7 @@ request.onSuccess = function (event) {
 };
 
 request.onerror = function (event) {
-
+console.log("There has been an error.")
 };
 
 function saveRecord (record) {
@@ -54,10 +63,11 @@ getAll.onsuccess = function () {
           store.clear();
         });
     }
-  };
+  }}
 
 function deletePending() {
   const transaction = db.transaction(["pending"], "readwrite");
   const store = transaction.objectStore("pending");
   store.clear();
 }
+window.addEventListener("online", checkDatabase)
